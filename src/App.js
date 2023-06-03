@@ -3,6 +3,8 @@ import Employee from "./components/Employee";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import AddEmployee from "./components/AddEmployee";
+import EditEmployee from "./components/EditEmployee";
+import Header from "./components/Header";
 
 function App() {
   const [role, setRole] = useState("dev");
@@ -47,7 +49,7 @@ function App() {
 
   function updateEmployee(id, newName, newRole) {
     const updatedEmployees = employees.map((employee) => {
-      if (id == employee.id) {
+      if (id === employee.id) {
         employee.name = newName;
         employee.role = newRole;
       }
@@ -68,17 +70,20 @@ function App() {
 
   const showEmployees = true;
   return (
-    <div className="App">
+    <div className="App bg-gray-50 min-h-screen">
+      <Header />
       {showEmployees ? (
         <>
-          <input
-            type="text"
-            onChange={(e) => {
-              setRole(e.target.value);
-            }}
-          />
           <div className="flex flex-wrap justify-center">
             {employees.map((employee) => {
+              const editEmployee = (
+                <EditEmployee
+                  id={employee.id}
+                  name={employee.name}
+                  role={employee.role}
+                  updateEmployee={updateEmployee}
+                />
+              );
               return (
                 <Employee
                   key={employee.id}
@@ -86,7 +91,7 @@ function App() {
                   name={employee.name}
                   role={employee.role}
                   img={employee.img}
-                  updateEmployee={updateEmployee}
+                  editEmployee={editEmployee}
                 />
               );
             })}
