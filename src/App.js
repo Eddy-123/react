@@ -5,103 +5,20 @@ import { v4 as uuidv4 } from "uuid";
 import AddEmployee from "./components/AddEmployee";
 import EditEmployee from "./components/EditEmployee";
 import Header from "./components/Header";
+import Employees from "./pages/Employees";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Customers from "./pages/Customers";
 
 function App() {
-  const [role, setRole] = useState("dev");
-  const [employees, setEmployees] = useState([
-    {
-      id: 1,
-      name: "Eddy",
-      role: "Developper",
-      img: "https://picsum.photos/200/300",
-    },
-    {
-      id: 2,
-      name: "Abby",
-      role: "Developper",
-      img: "https://picsum.photos/200/300",
-    },
-    {
-      id: 3,
-      name: "Adam",
-      role: "Developper",
-      img: "https://picsum.photos/200/300",
-    },
-    {
-      id: 4,
-      name: "Caleb",
-      role: "Developper",
-      img: "https://picsum.photos/200/300",
-    },
-    {
-      id: 5,
-      name: "Olivia",
-      role: "Developper",
-      img: "https://picsum.photos/200/300",
-    },
-    {
-      id: 6,
-      name: "Eden",
-      role: "Developper",
-      img: "https://picsum.photos/200/300",
-    },
-  ]);
-
-  function updateEmployee(id, newName, newRole) {
-    const updatedEmployees = employees.map((employee) => {
-      if (id === employee.id) {
-        employee.name = newName;
-        employee.role = newRole;
-      }
-      return employee;
-    });
-    setEmployees(updatedEmployees);
-  }
-
-  function addEmployee(name, role, img) {
-    const newEmployee = {
-      id: uuidv4(),
-      name: name,
-      role: role,
-      img: img,
-    };
-    setEmployees([...employees, newEmployee]);
-  }
-
-  const showEmployees = true;
   return (
-    <div className="App bg-gray-50 min-h-screen">
-      <Header />
-      {showEmployees ? (
-        <>
-          <div className="flex flex-wrap justify-center">
-            {employees.map((employee) => {
-              const editEmployee = (
-                <EditEmployee
-                  id={employee.id}
-                  name={employee.name}
-                  role={employee.role}
-                  updateEmployee={updateEmployee}
-                />
-              );
-              return (
-                <Employee
-                  key={employee.id}
-                  id={employee.id}
-                  name={employee.name}
-                  role={employee.role}
-                  img={employee.img}
-                  editEmployee={editEmployee}
-                />
-              );
-            })}
-          </div>
-          <AddEmployee addEmployee={addEmployee} />
-        </>
-      ) : (
-        <p>You cannot see employees</p>
-      )}
-    </div>
+    <BrowserRouter>
+      <Header>
+        <Routes>
+          <Route path="/employees" element={<Employees />} />
+          <Route path="/customers" element={<Customers />} />
+        </Routes>
+      </Header>
+    </BrowserRouter>
   );
 }
 
