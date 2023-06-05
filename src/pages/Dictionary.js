@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Dictionary() {
   const [word, setWord] = useState("");
-  useEffect(() => {
-    console.log("state updated", word);
-  });
+  const navigate = useNavigate();
+
   return (
     <div>
       <input
@@ -13,7 +13,13 @@ function Dictionary() {
           setWord(e.target.value);
         }}
       />
-      <h1>Let's get the definition for {word}</h1>
+      <button
+        onClick={() => {
+          navigate("/definition/" + word, { replace: true });
+        }}
+      >
+        Search
+      </button>
     </div>
   );
 }
